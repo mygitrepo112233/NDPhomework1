@@ -20,7 +20,7 @@ namespace odev1 {
                 DialogResult result = MessageBox.Show("Do you want to save current document?", "Warning", MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.Yes) {
-                    saveToolStripMenuItem_Click(sender, e); //if user clicks yes, save func opens
+                    saveToolStripMenuItem_Click(sender, e); //call the save action
                 }
                 else if (result == DialogResult.Cancel) {
                     return; //cancels the new file creating process
@@ -58,7 +58,30 @@ namespace odev1 {
         }
 
         private void exitToolStripMenuItem_Click_1(object sender, EventArgs e) {
+            if (TextControl()) { //if current document is not null, an pop up occurs
+                DialogResult result = MessageBox.Show("Do you want to save current document?", "Warning", MessageBoxButtons.YesNoCancel);
+
+                if (result == DialogResult.Yes) {
+                    saveToolStripMenuItem_Click(sender, e); //call the save action
+                }
+                else if (result == DialogResult.Cancel) {
+                    return; //cancels the new file creating process
+                }
+            }
             Application.Exit();
+        }
+
+        private void FormClosingHandler(object sender, FormClosingEventArgs e) {
+            if (TextControl()) {
+                DialogResult result = MessageBox.Show("Do you want to save current document?", "Warning", MessageBoxButtons.YesNoCancel);
+
+                if (result == DialogResult.Yes) {
+                    saveToolStripMenuItem_Click(sender, e); //call the save action
+                }
+                else if (result == DialogResult.Cancel) {
+                    e.Cancel = true;
+                }
+            }
         }
 
         private bool TextControl() {
@@ -141,6 +164,14 @@ namespace odev1 {
         }
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e) {
             richTextBox1.Paste();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Redo();
         }
     }
 }
