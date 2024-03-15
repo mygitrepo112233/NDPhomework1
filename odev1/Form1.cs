@@ -108,20 +108,6 @@ namespace odev1 {
             richTextBox1.SelectionColor = color;
         }
 
-
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
-            richTextBox1.Copy();
-
-        }
-
-        private void cutToolStripMenuItem_Click(object sender, EventArgs e) {
-            richTextBox1.Cut();
-
-        }
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e) {
-            richTextBox1.Paste();
-        }
-
         private void Search(string requestedText) {
             if (requestedText.Length == 0) {
                 return;
@@ -143,6 +129,18 @@ namespace odev1 {
             richTextBox1.SelectAll();
             richTextBox1.SelectionBackColor = Color.White;
             Search(requestedText);
+        }
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Copy();
+
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Cut();
+
+        }
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Paste();
         }
     }
 }
