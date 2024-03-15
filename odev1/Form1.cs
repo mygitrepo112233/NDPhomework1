@@ -71,62 +71,78 @@ namespace odev1 {
         private void fontToolStripMenuItem_Click(object sender, EventArgs e) {
             FontDialog fontDialog = new FontDialog();
 
-            // Mevcut fontu alarak FontDialog'a varsayılan olarak atanması
+            //Making the new font to default
             fontDialog.Font = richTextBox1.SelectionFont;
 
             if (fontDialog.ShowDialog() == DialogResult.OK) {
-                Font yeniFont = fontDialog.Font;
-
-                // Değiştirilecek fontu değiştirme fonksiyonuna gönder
-                ChangeFont(yeniFont);
+                Font newFont = fontDialog.Font;
+                ChangeFont(newFont);
             }
         }
 
         private void ChangeFont(Font font) {
-            // Eğer metin seçili değilse, font değişikliği yapma
-            if (richTextBox1.SelectionLength == 0)
-                return;
 
-            // Seçili metnin fontunu değiştir
+            //Change selected texts font
             richTextBox1.SelectionFont = font;
-
-            // Yeni yazılacak metnin fontunu da ayarla
-            richTextBox1.SelectionLength = 0; // Seçili metni temizle
-            richTextBox1.SelectionFont = font; // Yeni yazılacak metnin fontunu ayarla
+            richTextBox1.SelectionLength = 0;
+            richTextBox1.SelectionFont = font;
         }
-
-        private void dtToolStripMenuItem_Click(object sender, EventArgs e) {
-            richTextBox1.Text += "\n" + System.DateTime.Now.ToString();
-        }
-
-       /*private void fontToolStripMenuItem_Click(object sender, EventArgs e) {
-            FontDialog font = new FontDialog();
-
-            if (font.ShowDialog() == DialogResult.OK) {
-                ChangeFont(font);
-            }
-        }*/
 
         private void colorToolStripMenuItem_Click(object sender, EventArgs e) {
-            ColorDialog font = new ColorDialog();
+            ColorDialog color = new ColorDialog();
 
-            if (font.ShowDialog() == DialogResult.OK) {
-                richTextBox1.ForeColor = font.Color;
+            //Making the new color to default
+            color.Color = richTextBox1.SelectionColor;
+
+            if (color.ShowDialog() == DialogResult.OK) {
+                Color newColor = color.Color;
+                ChangeColor(newColor);
             }
         }
 
+        private void ChangeColor(Color color) {
+
+            //Change selected texts color
+            richTextBox1.SelectionColor = color;
+            richTextBox1.SelectionLength = 0;
+            richTextBox1.SelectionColor = color;
+        }
 
 
-        /*private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Copy();
 
-            SaveFileDialog open = new SaveFileDialog();
-            open.Title = "Save";
-            open.Filter = "Text Document(*.txt|*.txt|All Files(*.*)|*.*";
+        }
 
-            if (open.ShowDialog() == DialogResult.OK) {
-                richTextBox1.SaveFile(open.FileName, RichTextBoxStreamType.PlainText);
-                this.Text = open.FileName;
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Cut();
+
+        }
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e) {
+            richTextBox1.Paste();
+        }
+
+        private void Search(string requestedText) {
+            if (requestedText.Length == 0) {
+                return;
             }
-        }*/
+
+            int start = 0;
+            int end = richTextBox1.Text.LastIndexOf(requestedText); //this variable stores text boxes total amount of character
+
+            while (start <= end) { //this loop finds all texts that matches with requested text and changes their color to yellow
+                richTextBox1.Find(requestedText, start, richTextBox1.TextLength, RichTextBoxFinds.None);
+                richTextBox1.SelectionBackColor = Color.Yellow;
+
+                start = richTextBox1.Text.IndexOf(requestedText, start) + 1;
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) {
+            string requestedText = textBox1.Text;
+            richTextBox1.SelectAll();
+            richTextBox1.SelectionBackColor = Color.White;
+            Search(requestedText);
+        }
     }
 }
