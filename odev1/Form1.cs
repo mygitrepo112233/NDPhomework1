@@ -1,4 +1,16 @@
-﻿using System;
+﻿/****************************************************************************
+**					SAKARYA ÜNİVERSİTESİ
+**				BİLGİSAYAR VE BİLİŞİM BİLİMLERİ FAKÜLTESİ
+**				    BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ
+**				   NESNEYE DAYALI PROGRAMLAMA DERSİ
+**					2023-2024 BAHAR DÖNEMİ
+**	
+**				ÖDEV NUMARASI..........: Bahar 1.odev
+**				ÖĞRENCİ ADI............: Serhat Har
+**				ÖĞRENCİ NUMARASI.......: G231210040
+**                         DERSİN ALINDIĞI GRUP...: 2.ogretim A grubu(cemil oz)
+****************************************************************************/
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -7,6 +19,7 @@ namespace odev1 {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
+            this.FormClosing += MainForm_FormClosing;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -71,17 +84,19 @@ namespace odev1 {
             Application.Exit();
         }
 
-        private void FormClosingHandler(object sender, FormClosingEventArgs e) {
-            if (TextControl()) {
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) { //This func not working no idea why(ok solved with "this.FormClosing += MainForm_FormClosing;" code block.
+
+            if (TextControl()) { //if current document is not null, an pop up occurs
                 DialogResult result = MessageBox.Show("Do you want to save current document?", "Warning", MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.Yes) {
                     saveToolStripMenuItem_Click(sender, e); //call the save action
                 }
                 else if (result == DialogResult.Cancel) {
-                    e.Cancel = true;
+                    return; //cancels the new file creating process
                 }
             }
+            Application.Exit();
         }
 
         private bool TextControl() {
@@ -147,21 +162,30 @@ namespace odev1 {
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e) {
+        private void textBox1_TextChanged(object sender, EventArgs e) { //this func calls everytime we changed the text box that used for search 
             string requestedText = textBox1.Text;
             richTextBox1.SelectAll();
             richTextBox1.SelectionBackColor = Color.White;
             Search(requestedText);
         }
+
+        private void backgroundFontToolStripMenuItem_Click(object sender, EventArgs e) {
+            ColorDialog renkDialog = new ColorDialog();
+
+            if (renkDialog.ShowDialog() == DialogResult.OK) {
+                //change the background color when the user selects and clicks OK button.
+                richTextBox1.BackColor = renkDialog.Color;
+            }
+        }
+
         private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
             richTextBox1.Copy();
-
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e) {
             richTextBox1.Cut();
-
         }
+
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e) {
             richTextBox1.Paste();
         }
