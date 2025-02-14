@@ -1,16 +1,4 @@
-﻿/****************************************************************************
-**					SAKARYA ÜNİVERSİTESİ
-**				BİLGİSAYAR VE BİLİŞİM BİLİMLERİ FAKÜLTESİ
-**				    BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ
-**				   NESNEYE DAYALI PROGRAMLAMA DERSİ
-**					2023-2024 BAHAR DÖNEMİ
-**	
-**				ÖDEV NUMARASI..........: Bahar 1.odev
-**				ÖĞRENCİ ADI............: Serhat Har
-**				ÖĞRENCİ NUMARASI.......: G231210040
-**                         DERSİN ALINDIĞI GRUP...: 2.ogretim A grubu(cemil oz)
-****************************************************************************/
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
